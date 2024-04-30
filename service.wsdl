@@ -1,57 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tns="http://example.com/userService"
+                  xmlns:tns="http://www.example.com/ws/wsSoapPort"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  targetNamespace="http://example.com/userService">
+                  targetNamespace="http://www.example.com/ws/wsSoapPort">
+
     <wsdl:types>
-        <xsd:schema targetNamespace="http://example.com/userService">
-            <xsd:complexType name="User">
-                <xsd:sequence>
-                    <xsd:element name="userIdNumber" type="xsd:string"/>
-                    <xsd:element name="userName" type="xsd:string"/>
-                    <xsd:element name="userAge" type="xsd:int"/>
-                    <xsd:element name="userEmail" type="xsd:string"/>
-                    <xsd:element name="userPhone" type="xsd:string"/>
-                    <xsd:element name="userCity" type="xsd:string"/>
-                    <xsd:element name="userCountry" type="xsd:string"/>
-                    <xsd:element name="userPostalCode" type="xsd:string"/>
-                </xsd:sequence>
-            </xsd:complexType>
+        <xsd:schema targetNamespace="http://www.example.com/ws/wsSoapPort">
+            <xsd:element name="userId" type="xsd:string"/>
+            <xsd:element name="userIdNumber" type="xsd:int"/>
+            <xsd:element name="userName" type="xsd:string"/>
+            <xsd:element name="userAge" type="xsd:int"/>
+            <xsd:element name="userEmail" type="xsd:string"/>
+            <xsd:element name="userPhone" type="xsd:string"/>
+            <xsd:element name="userAddress" type="xsd:string"/>
+            <xsd:element name="userCity" type="xsd:string"/>
+            <xsd:element name="userCountry" type="xsd:string"/>
+            <xsd:element name="userPostalCode" type="xsd:string"/>
+            
         </xsd:schema>
     </wsdl:types>
 
     <wsdl:message name="postUserRequest">
-        <wsdl:part name="user" element="tns:User"/>
+        <wsdl:part name="userIdNumber" element="tns:userIdNumber"/>
+        <wsdl:part name="userName" element="tns:userName"/>
+        <wsdl:part name="userAge" element="tns:userAge"/>
+        <wsdl:part name="userEmail" element="tns:userEmail"/>
+        <wsdl:part name="userPhone" element="tns:userPhone"/>
+        <wsdl:part name="userAddress" element="tns:userAddress"/>
+        <wsdl:part name="userCity" element="tns:userCity"/>
+        <wsdl:part name="userCountry" element="tns:userCountry"/>
+        <wsdl:part name="userPostalCode" element="tns:userPostalCode"/>
     </wsdl:message>
 
     <wsdl:message name="postUserResponse">
-        <wsdl:part name="result" element="xsd:string"/>
+        <wsdl:part name="userId" element="tns:userIdNumber"/>
+        <wsdl:part name="userIdNumber" element="tns:userIdNumber"/>
+        <wsdl:part name="userName" element="tns:userName"/>
+        <wsdl:part name="userAge" element="tns:userAge"/>
+        <wsdl:part name="userEmail" element="tns:userEmail"/>
+        <wsdl:part name="userPhone" element="tns:userPhone"/>
+        <wsdl:part name="userAddress" element="tns:userAddress"/>
+        <wsdl:part name="userCity" element="tns:userCity"/>
+        <wsdl:part name="userCountry" element="tns:userCountry"/>
+        <wsdl:part name="userPostalCode" element="tns:userPostalCode"/>
     </wsdl:message>
 
     <wsdl:message name="getUserRequest">
-        <wsdl:part name="userId" element="xsd:string"/>
+        <wsdl:part name="userIdNumber" element="tns:userIdNumber"/>
     </wsdl:message>
 
     <wsdl:message name="getUserResponse">
-        <wsdl:part name="user" element="tns:User"/>
+        <wsdl:part name="userId" element="tns:userIdNumber"/>
+        <wsdl:part name="userIdNumber" element="tns:userIdNumber"/>
+        <wsdl:part name="userName" element="tns:userName"/>
+        <wsdl:part name="userAge" element="tns:userAge"/>
+        <wsdl:part name="userEmail" element="tns:userEmail"/>
+        <wsdl:part name="userPhone" element="tns:userPhone"/>
+        <wsdl:part name="userAddress" element="tns:userAddress"/>
+        <wsdl:part name="userCity" element="tns:userCity"/>
+        <wsdl:part name="userCountry" element="tns:userCountry"/>
+        <wsdl:part name="userPostalCode" element="tns:userPostalCode"/>
     </wsdl:message>
 
-    <wsdl:portType name="UserServicePort">
-        <wsdl:operation name="postUser">
+    <wsdl:portType name="wsSoapPort">
+        <wsdl:operation name="post_user">
             <wsdl:input message="tns:postUserRequest"/>
             <wsdl:output message="tns:postUserResponse"/>
         </wsdl:operation>
-        <wsdl:operation name="getUser">
+        <wsdl:operation name="get_user">
             <wsdl:input message="tns:getUserRequest"/>
             <wsdl:output message="tns:getUserResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:binding name="UserServicePortBinding" type="tns:UserServicePort">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="postUser">
-            <soap:operation soapAction="http://example.com/userService/postUser"/>
+    <wsdl:binding name="wsSoapPortBinding" type="tns:wsSoapPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="post_user">
+            <soap:operation soapAction="http://www.example.com/ws/wsSoapPort/post_user"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -59,8 +85,8 @@
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="getUser">
-            <soap:operation soapAction="http://example.com/userService/getUser"/>
+        <wsdl:operation name="get_user">
+            <soap:operation soapAction="http://www.example.com/ws/wsSoapPort/get_user"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -69,10 +95,11 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-
-    <wsdl:service name="UserService">
-        <wsdl:port name="UserServicePort" binding="tns:UserServicePortBinding">
+    
+    <wsdl:service name="ws">
+        <wsdl:port name="wsSoapPort" binding="tns:wsSoapPortBinding">
             <soap:address location="http://localhost:3003/wsdl"/>
         </wsdl:port>
     </wsdl:service>
+
 </wsdl:definitions>

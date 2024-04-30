@@ -1,52 +1,46 @@
 var axios = require('axios');
 
 async function postUser(args, callback) {
-    try {
-        // Realizar la solicitud POST al servicio de creación de usuarios
-        const response = await axios.post('http://localhost:3003/users', {
-            userIdNumber: args.userIdNumber,
-            userName: args.userName,
-            userAge: args.userAge,
-            userEmail: args.userEmail,
-            userPhone: args.userPhone,
-            userCity: args.userCity,
-            userCountry: args.userCountry,
-            userPostalCode: args.userPostalCode
-        });
+    //create a axios request to the notification service and wait for the result
 
-        // Si la operación fue exitosa, devolver una respuesta con el resultado
+    await axios.post('http://localhost:8000/passenger', {
+        userIdNumber: parseInt(args.userIdNumber),
+        userName: args.userName,
+        userAge: parseInt(args.userAge),
+        userEmail: args.userEmail,
+        userPhone: args.userPhone,
+        userAddress: args.userAddress,
+        userCity: args.userCity,
+        userCountry: args.userCountry,
+        userPostalCode: args.userPostalCode
+    }).then(function (response) {
         callback({
-            result: "Success",
-            userId: response.data.userId
+            result: response.data
         });
-    } catch (error) {
-        // Si hubo un error, manejarlo y devolver una respuesta de error
-        console.error(error);
-        console.log(error.response.data);
-        callback({
-            result: "Errorsadasdasd"
-        });
-    }
-}
-
-async function getUser(args, callback) {
-    try {
-        // Realizar la solicitud GET al servicio para obtener información del usuario
-        const response = await axios.get('http://localhost:3003/users/' + args.userIdNumber);
-
-        // Devolver una respuesta con la información del usuario obtenida
-        callback({
-            result: "Success",
-            userData: response.data // Puedes ajustar esto según la estructura de la respuesta real
-        });
-    } catch (error) {
-        // Si hubo un error, manejarlo y devolver una respuesta de error
-        console.error(error);
+    }).catch(function (error) {
+        console.log(error);
         callback({
             result: "Error"
         });
-    }
+    });
+
 }
+
+
+async function getUser(args, callback) {
+    //create a axios request to the notification service and wait for the result
+    await axios.get('http://localhost:8000/passenger/' + args.userIdNumber).then(function (response) {
+        callback({
+            result: response.data
+        });
+    }).catch(function (error) {
+        console.log(error);
+        callback({
+            result: "Error"
+        });
+    });
+}
+
 
 module.exports = {
     post_user: postUser,
