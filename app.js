@@ -18,7 +18,7 @@ var service = {
 var xml = require('fs').readFileSync('service.wsdl', 'utf8');
 
 app.use(bodyParser.raw({type: function(){return true;}, limit: '5mb'}));
-app.listen(3010, function(){
+app.listen(3003, function(){
     soap.listen(app, '/wsdl', service, xml, function(){
         console.log('server initialized');
     });
