@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  wheels_int:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    restart: always
+    networks:
+      - mynetwork
+    depends_on:
+      - wheelsun_user_ms
+
+  wheelsun_user_ms:
+    image: jivegabe/image-wheelsun_user_ms
+    expose:
+      - 8000
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
